@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 import argparse, sys
 
 __HEAD_HTML__="""
@@ -30,7 +31,7 @@ def create_page_template(content: str = "") -> str:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("name", help="Name of the page", required=True)
+    parser.add_argument("name", help="Name of the page")
     parser.add_argument("--content", type=str, default="", help="Content of the page")
     args = parser.parse_args()
     page = create_page_template(args.content)
