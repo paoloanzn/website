@@ -4,3 +4,10 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+
+# MACOS
+.DS_store
+
+# python
+__pycache__

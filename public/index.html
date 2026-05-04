@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>X</title>
+    <link rel="shortcut icon" href="https://abs.twimg.com/favicons/twitter.3.ico">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <script src="./assets/js/clock.js" defer></script>
+</head>
+
+<body>
+    <div class="panel">
+        <p style="display: flex; justify-content: space-between;"><span>From: paoloanzn &lt;paolo@gladium.ai&gt;</span> <span><a href="https://paoloanzn.github.io" target="_blank" style="color: black;">(blog)</a></span></p>
+        <p>Date: <span id="clock"></span></p>
+        <p>Subject: Programmer</p>
+        <p><a href="mailto:paolo@gladium.ai" target="_blank">[email me]</a> <a
+                href="https://t.me/paoloanzn?text=Hey this is not a stupid question" target="_blank">[text me]</a> <a
+                href="https://www.linkedin.com/in/paolo-anzani-a2b469366/" target="_blank">[linkedin]</a> <a
+                href="https://github.com/paoloanzn" target="_blank">[github]</a> <a href="https://x.com/paoloanzn"
+                target="_blank">[twitter]</a></p>
+        <div id="spotify-player" style="display: none;">
+            <br><br>
+            <iframe data-testid="embed-iframe" style="border-radius:12px"
+                src="https://open.spotify.com/embed/track/7vgTNTaEz3CsBZ1N4YQalM?utm_source=generator" width="100%"
+                height="152" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+            <button id="toggle-music" style="cursor: pointer; border: none; background: none; font-size: 16px; color: black;">(🎵)</button>
+        </div>
+        <script>
+            const player = document.getElementById('spotify-player');
+            const btn = document.getElementById('toggle-music');
+            btn.addEventListener('click', () => {
+                if (player.style.display === 'none') {
+                    player.style.display = 'block';
+                    btn.textContent = '(close)';
+                } else {
+                    player.style.display = 'none';
+                    btn.textContent = '(🎵)';
+                }
+            });
+        </script>
+    </div>
+</body>
+
+</html>
