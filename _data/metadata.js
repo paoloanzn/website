@@ -2,9 +2,8 @@
 //
 // SITE_URL must be the canonical, absolute origin of the deployed site: it is
 // used for the Atom feed, canonical links and OpenGraph tags, all of which
-// require absolute URLs. Set it in the Cloudflare build environment (or export
-// it locally) whenever the domain changes.
-const url = (process.env.SITE_URL || "https://jolly-frog-b8bf.workers.dev")
+// require absolute URLs. The apex is canonical: the Worker 301s www to it.
+const url = (process.env.SITE_URL || "https://paoloanzn.com")
   .trim()
   .replace(/\/+$/, "");
 

@@ -1,8 +1,9 @@
 # paoloanzn.website
 
 Personal site and blog of Paolo Anzani. Static HTML built with
-[Eleventy](https://www.11ty.dev/), served from Cloudflare Workers static assets.
-No JavaScript ships to the browser, and there is no analytics of any kind.
+[Eleventy](https://www.11ty.dev/), served from Cloudflare Workers static assets
+at <https://paoloanzn.com>. No JavaScript ships to the browser; page views are
+counted server-side (see [Analytics](#analytics)).
 
 ## Commands
 
@@ -20,6 +21,8 @@ npm run format       # prettier over js/css/json/md
 
 ```
 .eleventy.js            all config: filters, plugins, markdown-it setup
+worker/index.js         serves _site/ via the ASSETS binding, counts page views
+stats.sh                reads the counts back out of Analytics Engine
 _data/metadata.js       site title, canonical URL, author, GPG details
 _data/series.json       post-series definitions, matched to posts by slug
 _data/featured.json     the "Start here" list: [{ slug, image }]
@@ -105,20 +108,63 @@ If you wire up Cloudflare Workers Builds (git-connected deploys) instead, set:
 - **Build command:** `npm ci && npm run build`
 - **Deploy command:** `npx wrangler deploy`
 
+### Domain
+
+`paoloanzn.com` and `www.paoloanzn.com` are attached to the Worker as Custom
+Domains in `wrangler.jsonc`; Cloudflare creates the DNS records and certificates
+on deploy. The apex is canonical and the Worker 301-redirects `www` to it.
+
+The first deploy will fail if a conflicting DNS record already exists on either
+hostname — Custom Domains can't be created over an existing CNAME. Delete the
+old record in the dashboard and deploy again.
+
 ### SITE_URL
 
-**`_data/metadata.js` currently defaults to `https://jolly-frog-b8bf.workers.dev`.**
-That URL is a placeholder. It is used for the Atom feed, `<link rel="canonical">`,
-OpenGraph tags, the sitemap and the `curl` command shown on the GPG page — all of
-which need an absolute origin, so it must be correct in production.
-
-Set it via the environment rather than editing the file:
+`_data/metadata.js` defaults to `https://paoloanzn.com`, which feeds the Atom
+feed, `<link rel="canonical">`, OpenGraph tags, the sitemap and the `curl`
+command on the GPG page. Override it for a build aimed somewhere else:
 
 ```bash
-SITE_URL="https://example.com" npm run build
+SITE_URL="https://staging.example.com" npm run build
 ```
 
-In Cloudflare, add `SITE_URL` as a build environment variable.
+## Analytics
+
+Page views are counted in the Worker and written to
+[Workers Analytics Engine](https://developers.cloudflare.com/analytics/analytics-engine/).
+Nothing runs in the browser: no script, no pixel, no cookie, no consent banner.
+
+Each request stores four things the server already sees — path, referrer
+_hostname_, country, status code. No IP addresses, user agents, query strings,
+session or visitor identifiers. Readers cannot be told apart, so there are no
+"unique visitors", only page views. Crawlers are filtered out by user agent,
+which is read and discarded rather than stored.
+
+`run_worker_first` in `wrangler.jsonc` limits Worker invocations to pages and
+the feed; CSS, fonts and images are served straight from the edge. Free tier is
+100,000 data points per day.
+
+Read the numbers back with `./stats.sh`:
+
+```bash
+export CF_ACCOUNT_ID=...   # `npx wrangler whoami`
+export CF_API_TOKEN=...    # Account -> Account Analytics -> Read
+
+./stats.sh                 # views per day, last 14 days
+./stats.sh pages 30        # most-read pages
+./stats.sh refs            # referrers
+./stats.sh countries
+./stats.sh feed            # feed fetches, i.e. roughly subscribers
+./stats.sh errors          # 404s worth fixing
+./stats.sh sql "SELECT ..."
+```
+
+Counts use `SUM(_sample_interval)` rather than `COUNT()`, because Analytics
+Engine samples high-volume rows and `COUNT()` would under-report.
+
+To turn analytics off entirely: drop `analytics_engine_datasets` from
+`wrangler.jsonc`. The Worker checks for the binding and simply skips recording
+if it isn't there.
 
 ## GPG
 

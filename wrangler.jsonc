@@ -2,16 +2,43 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "jolly-frog-b8bf",
   "compatibility_date": "2026-04-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "worker/index.js",
   "observability": {
     "enabled": true
   },
+  // Apex is canonical; the Worker 301s www to it.
+  "routes": [
+    { "pattern": "paoloanzn.com", "custom_domain": true },
+    { "pattern": "www.paoloanzn.com", "custom_domain": true }
+  ],
   // Eleventy builds the site into _site/; that directory is what gets served.
   // Run `npm run build` before `wrangler deploy` (or just `npm run deploy`).
   "assets": {
     "directory": "./_site",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Run the Worker before serving, so it can count the request — but only
+    // for pages and the feed. Static assets are served straight from the edge
+    // without invoking the Worker at all, which keeps invocations (and
+    // latency) to roughly one per page view rather than one per file.
+    "run_worker_first": [
+      "/*",
+      "!/css/*",
+      "!/fonts/*",
+      "!/img/*",
+      "!/favicon.ico",
+      "!/robots.txt",
+      "!/sitemap.xml",
+      "!/llms.txt",
+      "!/paoloanzn.gpg"
+    ]
   },
-  "compatibility_flags": [
-    "nodejs_compat"
+  // Server-side page counts. No client-side anything.
+  "analytics_engine_datasets": [
+    {
+      "binding": "ANALYTICS",
+      "dataset": "website_pageviews"
+    }
   ]
 }
