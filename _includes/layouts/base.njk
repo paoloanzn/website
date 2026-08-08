@@ -59,7 +59,6 @@
                 <ul id="breadcrumbs">
                     <li><a href="{{ '/' | url }}" {{ 'aria-current=page' if page.url == '/' else '' }}>All posts</a></li>
                     <li><a href="{{ '/start-here/' | url }}" {{ 'aria-current=page' if 'start-here' in page.url else '' }}>Start here</a></li>
-                    <li><a href="{{ '/about/' | url }}" {{ 'aria-current=page' if 'about' in page.url else '' }}>About</a></li>
                     <li><a href="{{ '/gpg/' | url }}" {{ 'aria-current=page' if 'gpg' in page.url else '' }}>GPG</a></li>
                     <li><a href="{{ metadata.feed.path | url }}">RSS</a></li>
                 </ul>

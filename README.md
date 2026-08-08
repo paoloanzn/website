@@ -32,7 +32,7 @@ _includes/logo.njk      inline SVG logo, inherits colour from CSS
 posts/*.md              one file per post; filename is the URL slug
 index.njk               paginated post list, 30 per page
 start_here.njk          featured posts
-about.njk, gpg.njk      standalone pages
+gpg.njk                 public key and encryption instructions
 feed.njk                Atom feed at /feed.xml
 robots.njk, sitemap.njk generated from the canonical URL
 css/index.css           the theme
