@@ -4,6 +4,7 @@
   "compatibility_date": "2026-04-18",
   "compatibility_flags": ["nodejs_compat"],
   "main": "worker/index.js",
+  "preview_urls": true,
   "observability": {
     "enabled": true
   },
