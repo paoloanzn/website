@@ -1,0 +1,555 @@
+/* ------------------------------------------------------------------
+   Dark typographic theme — "chalk on slate".
+
+   Adapted from the stylesheet of Erich Grunewald's blog
+   (https://github.com/erwald/blog, MIT), with an inverted palette, a
+   muted cyan accent and assorted additions. See LICENSE.
+
+   Fonts are declared in fonts.css.
+   ------------------------------------------------------------------ */
+
+/* --- tokens ------------------------------------------------------ */
+:root {
+  color-scheme: dark;
+
+  /* Cool near-blacks rather than pure #000: pure black + a serif at
+       high contrast causes halation (glowing/smeared strokes). Each of
+       these carries a little cyan so the neutrals agree with the accent
+       instead of fighting it. */
+  --bg: #0b1012;
+  --surface: #151d20; /* cards, code blocks, link highlights */
+  --surface-hi: #243236; /* hover, rules, borders */
+
+  /* Cool off-white, deliberately NOT #fff — holding it back keeps
+       contrast comfortable (still 15:1 on --bg, way past WCAG AAA). */
+  --fg: #dbe6e6;
+  --fg-muted: #93a3a4; /* 7.3:1 on --bg  */
+  --fg-dim: #7f9092; /* 5.8:1 on --bg, 5.1:1 on --surface — the
+                          faintest thing here still clears WCAG AA */
+
+  --accent: #a1cac8; /* muted pastel cyan, ~28% sat */
+  --accent-dim: #85b1af;
+
+  --title-font: "Junicode", Georgia, serif;
+  --body-font: "Junicode", Georgia, serif;
+  --mono-font: "Iosevka Fixed", ui-monospace, SFMono-Regular, monospace;
+
+  --measure: 660px;
+}
+
+/* --- base -------------------------------------------------------- */
+html {
+  font-family: var(--body-font);
+  font-size: 20px; /* the whole scale hangs off this */
+  color: var(--fg);
+  background: var(--bg);
+  scrollbar-color: var(--surface-hi) var(--bg);
+}
+/* NB: no `-webkit-font-smoothing: antialiased` on purpose — on dark
+   backgrounds it thins the strokes and a serif this delicate gets frail. */
+
+body {
+  margin: 0;
+  padding: 20px 0;
+}
+
+header,
+main,
+footer {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: var(--measure);
+}
+footer {
+  margin-top: 20px;
+  max-width: 480px;
+  color: var(--fg-muted);
+}
+footer p {
+  font-size: 17px;
+  text-align: center;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Links are highlight blocks. Inverted, the hover state becomes a solid
+   cyan chip — much more emphatic than the light-theme grey. */
+a {
+  color: var(--fg);
+  background-color: var(--surface);
+  text-decoration-color: var(--accent-dim);
+  text-underline-offset: 2px;
+}
+a:hover {
+  color: var(--bg);
+  background-color: var(--accent);
+}
+a:visited {
+  color: var(--fg-muted);
+}
+a:focus-visible,
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+b,
+strong {
+  font-weight: 700;
+  color: #eef5f5; /* bold needs a nudge brighter to read as bold on dark */
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--surface-hi);
+}
+
+/* --- nav --------------------------------------------------------- */
+#top-menu {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1ch;
+}
+#logo {
+  display: inline-flex;
+  color: var(--fg);
+  background: transparent;
+  line-height: 0;
+}
+#logo:hover {
+  color: var(--accent);
+  background: transparent;
+}
+
+#breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 23px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em; /* uppercase needs air, more so on dark */
+}
+#breadcrumbs li {
+  display: inline-block;
+  line-height: 1.5ch;
+  margin-left: 1.5ch;
+}
+#breadcrumbs a,
+#breadcrumbs a:visited {
+  color: var(--fg);
+  background: transparent;
+  text-decoration: none;
+}
+#breadcrumbs a:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+/* current page is italic + cyan */
+#breadcrumbs [aria-current]:not([aria-current="false"]) {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* --- typography -------------------------------------------------- */
+h1 {
+  font-family: var(--title-font);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 2ch;
+  margin: 0;
+  color: #f0f7f7;
+}
+h2 {
+  font-family: var(--title-font);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--accent);
+}
+h3 {
+  font-family: var(--title-font);
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--accent-dim);
+  padding-top: 0.5ch;
+}
+
+/* `ch`-based rhythm is the trick that makes it feel typeset */
+p,
+li,
+label {
+  line-height: 2.8ch;
+  hyphens: auto;
+}
+
+#date {
+  padding-top: 1ch;
+  color: var(--fg-muted);
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 20px;
+  border-left: 2px solid var(--surface-hi);
+  color: var(--fg-muted);
+}
+blockquote p,
+blockquote ul,
+blockquote li {
+  font-size: 18px;
+  line-height: 2.8ch;
+}
+
+sup {
+  line-height: 0;
+}
+
+/* --- images ------------------------------------------------------ */
+#content img {
+  width: 100%;
+}
+
+/* 1-bit dithered art is black-on-white; invert it and it becomes
+   white-on-black, which sits on a dark page perfectly. Either add this
+   class in your markdown, or bake the inversion into the convert script
+   (see dither.sh) and drop the filter. */
+.dither {
+  filter: invert(1);
+}
+
+/* Photographs shouldn't sit at full brightness against a dark page. */
+.photo {
+  filter: brightness(0.88) contrast(1.03);
+}
+
+figure {
+  margin: 20px 0;
+}
+figcaption {
+  font-size: 17px;
+  font-style: italic;
+  color: var(--fg-muted);
+  padding-top: 0.5ch;
+}
+
+/* --- post list --------------------------------------------------- */
+.post-abbrev-body {
+  margin-bottom: 20px;
+  padding: 1ch;
+  background-color: var(--surface);
+  border-left: 2px solid transparent;
+  transition:
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+.post-abbrev-body:hover {
+  border-left-color: var(--accent);
+  background-color: #1a2427;
+}
+.post-abbrev-date {
+  padding-bottom: 0.5ch;
+  color: var(--fg-muted);
+}
+.post-abbrev-link {
+  font-size: 26px;
+  padding-bottom: 0.5ch;
+}
+/* inside a card the link highlight is redundant — strip it back */
+.post-abbrev-link a {
+  background: transparent;
+  color: var(--fg);
+  text-decoration: none;
+}
+.post-abbrev-link a:hover {
+  background: transparent;
+  color: var(--accent);
+}
+.post-abbrev-read-time {
+  font-style: italic;
+  color: var(--fg-dim);
+}
+
+/* two-up featured grid */
+.post-abbrev-featured-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+.post-abbrev-featured-body {
+  width: calc(50% - 10px);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px;
+  background-color: var(--surface);
+}
+.post-abbrev-featured-img {
+  padding-top: 68%;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1ch;
+}
+.post-abbrev-featured-img a {
+  background: transparent;
+}
+.post-abbrev-featured-img img {
+  position: absolute;
+  object-fit: cover;
+  height: auto;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* --- pagination -------------------------------------------------- */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1ch;
+  align-items: baseline;
+  margin-top: 2ch;
+}
+.pagination-current {
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* --- code -------------------------------------------------------- */
+code {
+  font-family: var(--mono-font);
+  font-size: 16px;
+  padding: 2px;
+  margin: -2px;
+  hyphens: none;
+}
+:not(a) > code {
+  color: var(--accent-dim);
+  background-color: var(--surface);
+}
+
+/* full-bleed out of the text column, with a cyan spine */
+pre {
+  padding: 10px 20px;
+  margin: 20px -20px;
+  background-color: var(--surface);
+  border-left: 2px solid var(--accent-dim);
+  color: var(--fg);
+  overflow-x: auto;
+  overflow-y: clip;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+pre code {
+  color: var(--fg);
+  background: transparent;
+}
+
+/* Prism token classes (eleventy-plugin-syntaxhighlight) */
+.token.keyword,
+.token.tag,
+.token.selector {
+  color: var(--accent);
+  font-weight: 800;
+}
+.token.string,
+.token.attr-value {
+  color: #aecdc0;
+}
+.token.function,
+.token.class-name {
+  color: #bcd7ea;
+}
+.token.number,
+.token.boolean {
+  color: #d8b4c8;
+}
+.token.punctuation,
+.token.operator {
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+.token.comment {
+  color: var(--fg-dim);
+  font-style: italic;
+}
+
+/* the armoured GPG block: never wrap, it's meant to be copied whole */
+.key-block {
+  white-space: pre;
+  overflow-x: auto;
+  word-wrap: normal;
+}
+.key-block code {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  padding: 0.3ch 1ch 0.3ch 0;
+  border-bottom: 1px solid var(--surface-hi);
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  color: var(--accent-dim);
+  font-weight: 600;
+}
+.key-details th {
+  width: 9em;
+  white-space: nowrap;
+}
+.key-details code {
+  word-break: break-all;
+}
+
+/* --- callout box ------------------------------------------------- */
+.edit {
+  font-size: 18px;
+  color: var(--fg);
+  background: var(--surface);
+  padding: 0 20px;
+  margin: 20px -20px;
+  border: none;
+  border-left: 2px solid var(--accent);
+}
+
+/* --- misc bits --------------------------------------------------- */
+.bottom-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2ch;
+}
+
+.empty-state {
+  padding: 1ch 20px;
+  background: var(--surface);
+  border-left: 2px solid var(--surface-hi);
+  color: var(--fg-muted);
+}
+.empty-state p:first-child {
+  color: var(--fg);
+}
+
+.link-list {
+  list-style: none;
+  padding-left: 0;
+}
+.link-list li {
+  padding-bottom: 0.5ch;
+}
+
+#series {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--fg-muted);
+}
+#series p {
+  margin: 0;
+}
+#series ul {
+  list-style-type: none;
+  padding-left: 1.5ch;
+}
+#series .series-unpublished {
+  color: var(--fg-dim);
+}
+
+#subscribe-form {
+  background: var(--surface);
+  padding: 0 1ch;
+  margin: 2ch 0;
+  font-size: 18px;
+}
+
+.footnotes-sep {
+  margin: 2ch 0;
+}
+.footnotes-list {
+  font-size: 18px;
+  color: var(--fg-muted);
+}
+.direct-link {
+  background: transparent;
+  color: var(--fg-dim);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+h1:hover .direct-link,
+h2:hover .direct-link,
+h3:hover .direct-link {
+  opacity: 1;
+}
+
+input,
+textarea {
+  font-family: var(--body-font);
+  font-size: 17px;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--surface-hi);
+  padding: 0.4ch 0.6ch;
+}
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+}
+
+/* --- responsive -------------------------------------------------- */
+@media only screen and (max-width: 800px) {
+  pre code {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  pre code {
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  h1 {
+    line-height: 1.5ch;
+  }
+  #content {
+    width: 100%;
+    padding: 0;
+  }
+  .post-abbrev-featured-body {
+    width: 100%;
+  }
+  .bottom-nav {
+    font-size: 17px;
+  }
+  .edit,
+  pre {
+    margin: 20px 0;
+  }
+  pre {
+    white-space: pre;
+    word-wrap: normal;
+  }
+  .key-details th {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

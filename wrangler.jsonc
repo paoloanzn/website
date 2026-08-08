@@ -5,8 +5,11 @@
   "observability": {
     "enabled": true
   },
+  // Eleventy builds the site into _site/; that directory is what gets served.
+  // Run `npm run build` before `wrangler deploy` (or just `npm run deploy`).
   "assets": {
-    "directory": "./public"
+    "directory": "./_site",
+    "not_found_handling": "404-page"
   },
   "compatibility_flags": [
     "nodejs_compat"

@@ -1,0 +1,55 @@
+Third-party components
+======================
+
+Site design and code
+--------------------
+Adapted from the source of Erich Grunewald's blog.
+
+  Source:     https://github.com/erwald/blog
+  Author:     Erich Grunewald
+  Licence:    MIT (stated in that repository's README)
+  Used in:    .eleventy.js, _includes/, index.njk, start_here.njk, feed.njk,
+              css/index.css, css/fonts.css, dither.sh
+
+  What changed: ported from Eleventy 0.11 to Eleventy 3 (updated plugin and
+  markdown-it APIs); the palette was inverted to a dark theme with a muted
+  cyan accent; the Substack, Plausible and Netlify integrations were removed
+  in favour of Cloudflare, an RSS-only subscribe box and no analytics; the
+  newsletter page was replaced by About and GPG pages; the featured-post list
+  moved from a hard-coded array into _data/featured.json; reading time is
+  computed by a local filter rather than a plugin.
+
+  None of Erich Grunewald's writing or images are included in this repository.
+  His prose and images are CC BY-SA 4.0 and remain his.
+
+Junicode
+--------
+  Author:     Peter S. Baker
+  Source:     https://github.com/psb1558/Junicode-font
+  Licence:    SIL Open Font License 1.1 — fonts/LICENSE-Junicode.txt
+  Files:      fonts/junicode-*.woff2
+
+  Modified: subset with fonttools to latin, latin-ext and the punctuation used
+  by this site, retaining the kern, liga, clig, ccmp, mark, mkmk and rlig
+  features. The OFL permits this; the fonts remain under the OFL and are not
+  sold, and the reserved name has not been used on the modified files.
+
+Iosevka
+-------
+  Author:     Renzhi Li (Belleve Invis)
+  Source:     https://typeof.net/Iosevka/
+  Licence:    SIL Open Font License 1.1 — fonts/LICENSE-Iosevka.txt
+  Files:      fonts/iosevka-fixed-*.woff2
+
+  Modified: subset in the same way as above.
+
+Eleventy and plugins
+--------------------
+  @11ty/eleventy, @11ty/eleventy-plugin-rss,
+  @11ty/eleventy-plugin-syntaxhighlight — MIT
+  markdown-it and plugins, luxon — MIT
+
+Logo
+----
+  img/logo.svg is Paolo Anzani's own mark. It is not covered by the content
+  licence and is not licensed for reuse.

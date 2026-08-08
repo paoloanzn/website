@@ -1,0 +1,7 @@
+# Old Jekyll blog lived at paoloanzn.github.io; keep the shapes that used to
+# exist here pointing somewhere sensible.
+/blog        /            301
+/blog/*      /            301
+/index.html  /            301
+/rss.xml     /feed.xml    301
+/feed        /feed.xml    301

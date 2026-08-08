@@ -1,0 +1,44 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: collections.post
+  size: 30
+  reverse: true
+  alias: posts
+  # without this the home page wouldn't be built at all until the first
+  # post exists, since paginating an empty collection yields zero pages
+  generatePageOnEmptyData: true
+---
+<div>
+    {% for post in posts %}
+        <div class="post-abbrev-body">
+            <div class="post-abbrev-date">{{ post.date | readableDate }}</div>
+            <div class="post-abbrev-link"><a href="{{ post.url }}">{{ post.data.title | apostrophy | markdown | safe }}</a></div>
+            <div class="post-abbrev-read-time">{{ post.content | readTime }}</div>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>Nothing published yet.</p>
+            <p>
+                Posts will appear here as they're written. In the meantime there's
+                <a href="{{ '/about/' | url }}">a little about me</a>, or you can
+                subscribe to the <a href="{{ metadata.feed.path | url }}">feed</a>
+                and let them come to you.
+            </p>
+        </div>
+    {% endfor %}
+
+    {% if pagination.pages.length > 1 %}
+        <nav class="pagination" aria-label="Pagination">
+            {% if pagination.href.previous %}<a href="{{ pagination.href.previous }}">&#8592; Previous</a>{% endif %}
+            {% for pageEntry in pagination.pages %}
+                {% if page.url == pagination.hrefs[loop.index0] %}
+                    <span class="pagination-current" aria-current="page">{{ loop.index }}</span>
+                {% else %}
+                    <a href="{{ pagination.hrefs[loop.index0] }}">{{ loop.index }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.href.next %}<a href="{{ pagination.href.next }}">Next &#8594;</a>{% endif %}
+        </nav>
+    {% endif %}
+</div>

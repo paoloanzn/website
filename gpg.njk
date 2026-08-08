@@ -1,0 +1,48 @@
+---
+layout: layouts/base.njk
+title: GPG key
+permalink: /gpg/
+description: Paolo Anzani's public GPG key, for encrypted email and signature verification.
+---
+<h1>GPG key</h1>
+
+<p>
+    Use this to send me encrypted mail, or to verify something I've signed.
+    Same key as the one published at
+    <a href="https://github.com/paoloanzn.gpg">github.com/paoloanzn.gpg</a>.
+</p>
+
+<table class="key-details">
+    <tbody>
+        <tr><th>Identity</th><td>{{ metadata.author.name }} &lt;{{ metadata.author.email }}&gt;</td></tr>
+        <tr><th>Fingerprint</th><td><code>{{ metadata.gpg.fingerprint }}</code></td></tr>
+        <tr><th>Key ID</th><td><code>{{ metadata.gpg.keyid }}</code></td></tr>
+        <tr><th>Type</th><td>{{ metadata.gpg.type }}</td></tr>
+        <tr><th>Created</th><td>{{ metadata.gpg.created }}</td></tr>
+        <tr><th>Expires</th><td>{{ metadata.gpg.expires }}</td></tr>
+        <tr><th>Download</th><td><a href="{{ metadata.gpg.path | url }}">{{ metadata.gpg.path }}</a></td></tr>
+    </tbody>
+</table>
+
+<h2>Import it</h2>
+
+<pre><code>curl -sSL {{ metadata.url }}{{ metadata.gpg.path }} | gpg --import</code></pre>
+
+<p>
+    Then check that what you imported is what I published &#8212; compare the
+    fingerprint above against the output of:
+</p>
+
+<pre><code>gpg --fingerprint {{ metadata.gpg.keyid }}</code></pre>
+
+<div class="edit">
+    <p>
+        Verifying the fingerprint out of band matters. Anyone can serve you a
+        key over HTTPS; the fingerprint is what ties it to me. If it doesn't
+        match, don't use it, and tell me.
+    </p>
+</div>
+
+<h2>The key</h2>
+
+<pre class="key-block"><code>{{ pubkey }}</code></pre>

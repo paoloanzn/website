@@ -1,0 +1,86 @@
+---
+---
+<!doctype html>
+<html lang="{{ metadata.language }}">
+    <head>
+        <title>{{ title if title else metadata.title }}</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% set postDescription = title + ' \u2013 ' if title else '' %}
+        <meta name="description" content="{{ description or postDescription + metadata.description }}">
+        <meta name="robots" content="index,follow">
+        <meta name="generator" content="Eleventy">
+        <meta name="author" content="{{ metadata.author.name }}">
+        <meta name="theme-color" content="#0b1012">
+        <meta name="color-scheme" content="dark">
+
+        <link rel="canonical" href="{{ metadata.url }}{{ page.url }}">
+        <link rel="stylesheet" href="{{ '/css/fonts.css' | url }}">
+        <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
+        <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
+        <link rel="icon" href="{{ '/img/logo.svg' | url }}" type="image/svg+xml">
+        <link rel="shortcut icon" href="{{ '/favicon.ico' | url }}" sizes="16x16 32x32 48x48">
+        <link rel="apple-touch-icon" href="{{ '/img/apple-touch-icon.png' | url }}">
+
+        <link rel="preload" as="font" type="font/woff2" href="{{ '/fonts/junicode-regular.woff2' | url }}" crossorigin />
+        <link rel="preload" as="font" type="font/woff2" href="{{ '/fonts/junicode-italic.woff2' | url }}" crossorigin />
+        <link rel="preload" as="font" type="font/woff2" href="{{ '/fonts/junicode-bold.woff2' | url }}" crossorigin />
+
+        {%- block seo -%}
+            <!-- Twitter card -->
+            <meta name="twitter:card" content="summary">
+            <meta name="twitter:url" content="{{ metadata.url }}{{ page.url }}">
+            <meta name="twitter:title" content="{{ title or metadata.title }}">
+            <meta name="twitter:description" content="{{ description or metadata.description }}">
+
+            <!-- Schema -->
+            <link rel="author" href="{{ metadata.url }}">
+            <link rel="publisher" href="{{ metadata.url }}">
+            <meta itemprop="name" content="{{ title or metadata.title }}">
+            <meta itemprop="description" content="{{ description or metadata.description }}">
+
+            <!-- OpenGraph -->
+            <meta property="og:url" content="{{ metadata.url }}{{ page.url }}">
+            <meta property="og:type" content="{{ 'article' if date else 'website' }}">
+            <meta property="og:title" content="{{ title or metadata.title }}">
+            <meta property="og:description" content="{{ description or metadata.description }}">
+            <meta property="og:site_name" content="{{ metadata.title }}">
+            <meta property="og:locale" content="en_GB">
+            <meta property="article:author" content="{{ metadata.url }}">
+        {%- endblock -%}
+    </head>
+    <body id="top">
+        <header>
+            <div id="top-menu">
+                <a href="{{ '/' | url }}" id="logo" aria-label="{{ metadata.title }} \u2014 home">
+                    {% include "logo.njk" %}
+                </a>
+                <ul id="breadcrumbs">
+                    <li><a href="{{ '/' | url }}" {{ 'aria-current=page' if page.url == '/' else '' }}>All posts</a></li>
+                    <li><a href="{{ '/start-here/' | url }}" {{ 'aria-current=page' if 'start-here' in page.url else '' }}>Start here</a></li>
+                    <li><a href="{{ '/about/' | url }}" {{ 'aria-current=page' if 'about' in page.url else '' }}>About</a></li>
+                    <li><a href="{{ '/gpg/' | url }}" {{ 'aria-current=page' if 'gpg' in page.url else '' }}>GPG</a></li>
+                    <li><a href="{{ metadata.feed.path | url }}">RSS</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <div id="content">
+                {{ content | safe }}
+                {% if date %}
+                    <div class="bottom-nav">
+                        <a href="{{ '/' | url }}">&#8592; Return to home page</a>
+                        <a href="#top">&#8593; Return to top</a>
+                    </div>
+                {% endif %}
+            </div>
+        </main>
+        <footer>
+            <hr />
+            <p>Written by {{ metadata.author.name }}. Say hello at <a href="mailto:{{ metadata.author.email }}">{{ metadata.author.email }}</a>, ideally <a href="{{ '/gpg/' | url }}">encrypted</a>.</p>
+            <p>Text and images are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; the <a href="https://github.com/paoloanzn/website">code</a> under <a href="https://opensource.org/licenses/MIT">MIT</a>. Built with <a href="https://www.11ty.dev/">Eleventy</a>, on a design adapted from <a href="https://github.com/erwald/blog">Erich Grunewald's blog</a>.</p>
+            <p>No cookies, no analytics, no tracking of any kind.</p>
+        </footer>
+    </body>
+</html>

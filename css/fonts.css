@@ -1,0 +1,55 @@
+/* Junicode by Peter S. Baker — SIL Open Font License 1.1.
+   https://github.com/psb1558/Junicode-font — see /fonts/LICENSE-Junicode.txt
+   Subset to latin + latin-ext + the punctuation this site actually uses. */
+@font-face {
+  font-family: "Junicode";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/junicode-regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Junicode";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/junicode-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Junicode";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/junicode-bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Junicode";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/junicode-bolditalic.woff2") format("woff2");
+}
+
+/* Iosevka by Renzhi Li — SIL Open Font License 1.1.
+   https://typeof.net/Iosevka/ — see /fonts/LICENSE-Iosevka.txt */
+@font-face {
+  font-family: "Iosevka Fixed";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/iosevka-fixed-regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Iosevka Fixed";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/iosevka-fixed-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Iosevka Fixed";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("../fonts/iosevka-fixed-extrabold.woff2") format("woff2");
+}

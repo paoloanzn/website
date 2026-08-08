@@ -1,0 +1,44 @@
+---
+layout: layouts/base.njk
+title: About
+permalink: /about/
+---
+<h1>About</h1>
+
+<p>
+    I'm Paolo Anzani, a programmer. This is where I write things down &#8212;
+    mostly about software, sometimes about whatever else is holding my
+    attention. All opinions are my own.
+</p>
+
+<h2>Elsewhere</h2>
+
+<ul class="link-list">
+    <li><a href="mailto:{{ metadata.author.email }}">{{ metadata.author.email }}</a> &#8212; email, <a href="{{ '/gpg/' | url }}">encrypted if you like</a></li>
+    <li><a href="{{ metadata.social.github }}">GitHub</a> &#8212; code</li>
+    <li><a href="{{ metadata.social.telegram }}">Telegram</a> &#8212; for anything short</li>
+    <li><a href="{{ metadata.social.twitter }}">X</a></li>
+    <li><a href="{{ metadata.social.linkedin }}">LinkedIn</a></li>
+    <li><a href="{{ metadata.feed.path | url }}">RSS</a> &#8212; the feed</li>
+</ul>
+
+<h2>This site</h2>
+
+<p>
+    Static HTML built with <a href="https://www.11ty.dev/">Eleventy</a> and served
+    from <a href="https://developers.cloudflare.com/workers/static-assets/">Cloudflare</a>.
+    No JavaScript, no cookies, no analytics &#8212; nothing about your visit is
+    recorded anywhere.
+</p>
+
+<p>
+    The design is adapted, with thanks, from
+    <a href="https://github.com/erwald/blog">Erich Grunewald's blog</a>, whose
+    code is MIT-licensed; the typefaces are
+    <a href="https://github.com/psb1558/Junicode-font">Junicode</a> and
+    <a href="https://typeof.net/Iosevka/">Iosevka</a>. Everything I write here is
+    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, so
+    quote it, republish it, build on it &#8212; just credit me and pass the same
+    freedom along. The <a href="https://github.com/paoloanzn/website">source</a>
+    is MIT.
+</p>

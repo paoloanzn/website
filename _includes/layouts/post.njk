@@ -1,0 +1,44 @@
+---
+layout: layouts/base.njk
+---
+{% set thisSeries = page.fileSlug | getSeries(series) %}
+{% if thisSeries %}
+    <div id="series">
+        <p>This post is part of a series on {{ thisSeries.subject }}:</p>
+        <ul>
+            {% for item in thisSeries.posts %}
+                <li>
+                    {% if item.slug == page.fileSlug %}
+                        &#187; {{ item.title }}
+                    {% elif item.slug %}
+                        <a href="{{ ('/posts/' + item.slug + '/') | url }}">{{ item.title }}</a>
+                    {% else %}
+                        <span class="series-unpublished">{{ item.title }} (forthcoming)</span>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<h1>{{ title | apostrophy | markdown | safe }}</h1>
+<div id="date">
+    {% if date %}<span class="nowrap">{{ date | readableDate }}</span>{% endif %}
+    &#8226; {{ content | readTime }}
+    {%- set links = [] -%}
+    {%- for item in [{ url: hn_link, name: "HN" }, { url: lobsters_link, name: "Lobsters" }, { url: x_link, name: "X" }] -%}
+        {%- if item.url -%}{%- set _ = links.push('<a href="' + item.url + '">' + item.name + '</a>') -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if links.length -%}
+        &#8226; comment via {{ links | join(', ') | safe }}
+    {%- endif -%}
+</div>
+
+{{ content | removeTitle | safe }}
+
+<div id="subscribe-form">
+    <p>
+        New posts land in the <a href="{{ metadata.feed.path | url }}">RSS feed</a>.
+        If you'd rather talk than subscribe, <a href="mailto:{{ metadata.author.email }}?subject={{ title | urlencode }}">reply by email</a>.
+    </p>
+</div>

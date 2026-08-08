@@ -1,3 +1,9 @@
+# build output
+_site/
+
+# dependencies
+node_modules/
+
 # wrangler files
 .wrangler
 .dev.vars*
@@ -5,9 +11,5 @@
 .env*
 !.env.example
 
-
-# MACOS
-.DS_store
-
-# python
-__pycache__
+# macOS
+.DS_Store
