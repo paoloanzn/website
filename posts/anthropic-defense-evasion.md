@@ -21,7 +21,7 @@ The evidence points to three pieces that together form this request fingerprint.
 
 I approached the problem in three layers: (1) observing Claude Code’s API traffic through a local proxy, (2) statically analyzing its bundled JavaScript, and (3) tracing its native runtime with LLDB, the debugger used on macOS.
 
-The next section describes the HTTP request shape in interactive mode and headless `-p` mode. After that, I reconstruct Anthropic’s defense and the fingerprinting path, then consider what reproducing it does -- and does not -- establish.
+The next section describes the HTTP request shape in interactive mode and headless `-p` mode. After that, I reconstruct Anthropic’s defense and the fingerprinting path.
 
 Anthropic’s [authentication and credential-use terms](https://code.claude.com/docs/en/legal-and-compliance#authentication-and-credential-use) are relevant here. The methods discussed in this post may violate those terms, and readers should not treat the reconstruction as permission to bypass billing controls or use credentials outside the conditions under which they were issued.
 
