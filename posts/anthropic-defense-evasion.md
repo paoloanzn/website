@@ -7,7 +7,7 @@ tags: post
 
 # Anthropic Defense Evasion
 
-![img]({{ '/img/hero/man-in-the-water.png' | url }})
+![img]({{ '/img/hero/knight-vs-dragon.png' | url }})
 
 ## Introduction
 
