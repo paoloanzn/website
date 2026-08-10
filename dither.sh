@@ -35,9 +35,6 @@ command -v magick >/dev/null || { echo "ImageMagick 7 (magick) not found" >&2; e
 # main column width, and a small thumbnail for any featured grid
 sizes=("660:" "300:_thumb")
 
-invert_arg=()
-$invert && invert_arg=(-negate)
-
 shopt -s nullglob
 for img in img_original/hero/*; do
     [ -f "$img" ] || continue
@@ -62,14 +59,17 @@ for img in img_original/hero/*; do
         attenuate=1.2
         [ "$width" -le 300 ] && attenuate=0.6
 
-        magick "$img" \
-            -resize "${width}x" \
-            -gamma 1.5 \
-            -attenuate "$attenuate" +noise gaussian \
-            -monochrome \
-            +level-colors "black,white" \
-            "${invert_arg[@]}" \
-            "$dest"
+        magick_args=(
+            "$img"
+            -resize "${width}x"
+            -gamma 1.5
+            -attenuate "$attenuate" +noise gaussian
+            -monochrome
+            +level-colors "black,white"
+        )
+        $invert && magick_args+=(-negate)
+        magick_args+=("$dest")
+        magick "${magick_args[@]}"
         echo "converted: $img -> $dest (${width}px)"
     done
 done
